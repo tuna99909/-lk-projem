@@ -18,6 +18,12 @@ async def hello(ctx):
     await ctx.send(f'Merhaba! Ben {bot.user}, bir Discord sohbet botuyum!')
 
 @bot.command()
+async def add(ctx, left: int, right: int):
+    """Adds two numbers together."""
+    await ctx.send(left + right)
+
+
+@bot.command()
 async def roll(ctx, dice: str):
     """Rolls a dice in NdN format."""
     try:
