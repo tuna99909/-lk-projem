@@ -1,15 +1,33 @@
-meme_dict = {
-            "CRINGE": "Garip ya da utandırıcı bir şey",
-            "LOL": "Komik bir şeye verilen cevap",
-            "ROFL": "Bir şakaya karşılık cevap",
-            "SHEESH": "Onaylamamak",
-            "CREEPY": "Korkunç",
-            "AGGRO": "Agresifleşmek/Sinirlenmek",
-            }
-word = input("Anlamadığınız bir kelime yazın (hepsini büyük harflerle yazın!): ")
-if word in meme_dict.keys():
-    # Kelime eşleşiyorsa ne yapmalıyız?
-    print(meme_dict[word])
-else:
-    # Kelime eşleşmiyorsa ne yapmalıyız?
-    print("Henüz bu kelimeye sayip deyiliz. Ama bunun için çalışçaz." )
+import discord
+from discord.ext import commands
+from confing import TOKEN
+
+
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'{bot.user} olarak giriş yaptık')
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Merhaba! Ben {bot.user}, bir Discord sohbet botuyum!')
+
+@bot.command()
+async def roll(ctx, dice: str):
+    """Rolls a dice in NdN format."""
+    try:
+        rolls, limit = map(int, dice.split('d'))
+    except Exception:
+        await ctx.send('Format has to be in NdN!')
+        return
+
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
+
+bot.run(TOKEN)
